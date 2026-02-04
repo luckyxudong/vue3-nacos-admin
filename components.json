@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "tailwind": {
+    "config": "uno.config.ts",
+    "css": "src/assets/scss/index.scss",
+    "baseColor": "zinc",
+    "cssVariables": true
+  },
+  "typescript": true,
+  "aliases": {
+    "utils": "@/lib/utils",
+    "components": "@/components",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}

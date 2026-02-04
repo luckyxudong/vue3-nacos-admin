@@ -1,0 +1,47 @@
+export default {
+  title: 'User Management',
+  search: {
+    username: 'Username',
+    usernamePlaceholder: 'Enter username',
+    fuzzySearch: 'Fuzzy Search',
+    query: 'Query',
+    reset: 'Reset',
+  },
+  table: {
+    username: 'Username',
+    password: 'Password',
+    operation: 'Operation',
+  },
+  action: {
+    create: 'Add User',
+    resetPassword: 'Reset Password',
+    delete: 'Delete',
+  },
+  dialog: {
+    createTitle: 'Add User',
+    resetTitle: 'Reset Password',
+    deleteTitle: 'Delete Confirmation',
+    deleteContent: 'Are you sure you want to delete user {username}?',
+    usernameLabel: 'Username',
+    passwordLabel: 'Password',
+    rePasswordLabel: 'Confirm Password',
+    usernamePlaceholder: 'Enter username',
+    passwordPlaceholder: 'Enter password',
+    rePasswordPlaceholder: 'Enter password again',
+    usernameRequired: 'Username is required',
+    passwordRequired: 'Password is required',
+    rePasswordRequired: 'Please confirm your password',
+    passwordNotMatch: 'Passwords do not match',
+    confirmCreate: 'Confirm Create',
+    confirmReset: 'Confirm Edit',
+  },
+  message: {
+    createSuccess: 'User created successfully',
+    createFailed: 'Failed to create user',
+    resetSuccess: 'Password reset successfully',
+    resetFailed: 'Failed to reset password',
+    deleteSuccess: 'User deleted successfully',
+    deleteFailed: 'Failed to delete user',
+    fetchFailed: 'Failed to fetch user list',
+  }
+}

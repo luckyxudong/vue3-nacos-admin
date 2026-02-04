@@ -1,0 +1,47 @@
+export default {
+  title: '用户管理',
+  search: {
+    username: '用户名',
+    usernamePlaceholder: '请输入用户名',
+    fuzzySearch: '模糊查询',
+    query: '查询',
+    reset: '重置',
+  },
+  table: {
+    username: '用户名',
+    password: '密码',
+    operation: '操作',
+  },
+  action: {
+    create: '新增用户',
+    resetPassword: '重置密码',
+    delete: '删除',
+  },
+  dialog: {
+    createTitle: '新增用户',
+    resetTitle: '重置密码',
+    deleteTitle: '删除确认',
+    deleteContent: '确定要删除用户 {username} 吗？',
+    usernameLabel: '用户名',
+    passwordLabel: '密码',
+    rePasswordLabel: '确认密码',
+    usernamePlaceholder: '请输入用户名',
+    passwordPlaceholder: '请输入密码',
+    rePasswordPlaceholder: '请再次输入密码',
+    usernameRequired: '用户名不能为空',
+    passwordRequired: '密码不能为空',
+    rePasswordRequired: '请再次输入密码以确认',
+    passwordNotMatch: '两次输入的密码不一致',
+    confirmCreate: '确认创建',
+    confirmReset: '确认修改',
+  },
+  message: {
+    createSuccess: '创建用户成功',
+    createFailed: '创建用户失败',
+    resetSuccess: '重置密码成功',
+    resetFailed: '重置密码失败',
+    deleteSuccess: '删除用户成功',
+    deleteFailed: '删除用户失败',
+    fetchFailed: '获取用户列表失败',
+  }
+}

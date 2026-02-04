@@ -1,0 +1,100 @@
+@use 'sass:color';
+
+// shadcn-vue 基础颜色（基于 zinc）
+$shadcn-zinc-50: #fafafa;
+$shadcn-zinc-100: #f4f4f5;
+$shadcn-zinc-200: #e4e4e7;
+$shadcn-zinc-300: #d4d4d8;
+$shadcn-zinc-400: #a1a1aa;
+$shadcn-zinc-500: #71717a;
+$shadcn-zinc-600: #52525b;
+$shadcn-zinc-700: #3f3f46;
+$shadcn-zinc-800: #27272a;
+$shadcn-zinc-900: #18181b;
+$shadcn-zinc-950: #09090b;
+
+// 浅色主题（默认）
+:root {
+  // 背景色
+  --background: #{$shadcn-zinc-50};
+  --foreground: #{$shadcn-zinc-950};
+
+  // 卡片
+  --card: #{$shadcn-zinc-50};
+  --card-foreground: #{$shadcn-zinc-950};
+
+  // 弹出层
+  --popover: #{$shadcn-zinc-50};
+  --popover-foreground: #{$shadcn-zinc-950};
+
+  // 主要按钮
+  --primary: #{$shadcn-zinc-900};
+  --primary-foreground: #{$shadcn-zinc-50};
+
+  // 次要按钮
+  --secondary: #{$shadcn-zinc-100};
+  --secondary-foreground: #{$shadcn-zinc-900};
+
+  // 静音/禁用
+  --muted: #{$shadcn-zinc-100};
+  --muted-foreground: #{$shadcn-zinc-500};
+
+  // 强调
+  --accent: #{$shadcn-zinc-100};
+  --accent-foreground: #{$shadcn-zinc-900};
+
+  // 破坏性操作
+  --destructive: #ef4444;
+  --destructive-foreground: #{$shadcn-zinc-50};
+
+  // 边框
+  --border: #{$shadcn-zinc-300};
+  --input: #{$shadcn-zinc-400};
+  --ring: #1c9399; // 使用 $wm-color-primary
+
+  // 圆角
+  --radius: 0.5rem;
+}
+
+// 深色主题
+[data-theme='dark'] {
+  // 背景色
+  --background: #{$shadcn-zinc-950};
+  --foreground: #{$shadcn-zinc-50};
+
+  // 卡片
+  --card: #{$shadcn-zinc-950};
+  --card-foreground: #{$shadcn-zinc-50};
+
+  // 弹出层
+  --popover: #{$shadcn-zinc-950};
+  --popover-foreground: #{$shadcn-zinc-50};
+
+  // 主要按钮
+  --primary: #{$shadcn-zinc-50};
+  --primary-foreground: #{$shadcn-zinc-900};
+
+  // 次要按钮
+  --secondary: #{$shadcn-zinc-800};
+  --secondary-foreground: #{$shadcn-zinc-50};
+
+  // 静音/禁用
+  --muted: #{$shadcn-zinc-800};
+  --muted-foreground: #{$shadcn-zinc-400};
+
+  // 强调
+  --accent: #{$shadcn-zinc-800};
+  --accent-foreground: #{$shadcn-zinc-50};
+
+  // 破坏性操作
+  --destructive: #ef4444;
+  --destructive-foreground: #{$shadcn-zinc-50};
+
+  // 边框
+  --border: #{$shadcn-zinc-800};
+  --input: #{$shadcn-zinc-800};
+  --ring: #{$shadcn-zinc-300};
+
+  // 圆角
+  --radius: 0.5rem;
+}
