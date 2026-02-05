@@ -5,7 +5,7 @@ import type { InterceptorConfig } from './types'
 // 默认请求拦截器-成功处理函数
 export const defaultRequestOnFulfilled = (config: AxiosRequestConfig) => {
   // 请求日志
-  if (Env.isDev) {
+  if (!Env.isProd) {
     console.log('Request:', {
       url: config.url,
       method: config.method,
@@ -24,7 +24,7 @@ export const defaultRequestOnRejected = (error: AxiosError): any => {
 // 默认响应拦截器-成功
 export const defaultResponseOnFulfilled = (response: AxiosResponse): any => {
   // 响应日志
-  if (Env.isDev) {
+  if (!Env.isProd) {
     console.log('Response:', {
       url: response.config.url,
       status: response.status,
