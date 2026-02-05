@@ -43,26 +43,32 @@ const namespaces = [
 ]
 
 export default [
-  // 命名空间列表查询
+  // 命名空间 GET 请求处理 (列表、详情、检查存在)
   {
     url: '/v1/console/namespaces',
     method: 'get',
-    response: () => {
-      return success(namespaces)
-    },
-  },
-  // 获取命名空间详情
-  {
-    url: '/v1/console/namespaces',
-    method: 'get',
-    params: { show: 'all' },
-    response: ({ query }: any) => {
-      const { namespaceId } = query
-      const ns = namespaces.find((item: any) => item.namespace === namespaceId)
-      if (ns) {
-        return success(ns)
+    response: (request: any) => {
+      const { query } = request
+      const { show, namespaceId, checkNamespaceIdExist, customNamespaceId } = query
+
+      console.log('Mock Namespace GET Request:', { query })
+
+      // 1. 检查是否存在
+      if (checkNamespaceIdExist === 'true' || checkNamespaceIdExist === true) {
+        return namespaces.some((item: any) => item.namespace === customNamespaceId)
       }
-      return error('命名空间不存在', 404)
+
+      // 2. 获取详情
+      if (show === 'all' && namespaceId !== undefined) {
+        const ns = namespaces.find((item: any) => item.namespace === namespaceId)
+        if (ns) {
+          return success(ns)
+        }
+        return error('命名空间不存在', 404)
+      }
+
+      // 3. 默认返回列表
+      return success(namespaces)
     },
   },
   // 创建命名空间
