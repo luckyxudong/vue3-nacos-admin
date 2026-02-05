@@ -1,6 +1,6 @@
 ﻿import Mock from 'mockjs'
 
-function success(data) {
+function success(data: any) {
   return {
     code: 0,
     message: 'success',
@@ -8,7 +8,7 @@ function success(data) {
   }
 }
 
-function error(message, code = 400) {
+function error(message: any, code = 400) {
   return {
     code,
     message,
@@ -37,7 +37,7 @@ export default [
   {
     url: '/v1/auth/users',
     method: 'get',
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { pageNo = 1, pageSize = 10, username, search = 'blur' } = query
       let filteredList = [...userList]
 
@@ -66,9 +66,9 @@ export default [
   {
     url: '/v1/auth/users',
     method: 'post',
-    response: ({ body }) => {
+    response: ({ body }: any) => {
       const { username, password } = body
-      if (userList.some((item) => item.username === username)) {
+      if (userList.some((item: any) => item.username === username)) {
         return error('用户已存在')
       }
       userList.push({ username, password })
@@ -79,18 +79,18 @@ export default [
   {
     url: '/v1/auth/users/search',
     method: 'get',
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { username } = query
-      return success(userList.filter((item) => item.username.includes(username)).map((item) => item.username))
+      return success(userList.filter((item: any) => item.username.includes(username)).map((item: any) => item.username))
     },
   },
   // 删除用户
   {
     url: '/v1/auth/users',
     method: 'delete',
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { username } = query
-      const index = userList.findIndex((item) => item.username === username)
+      const index = userList.findIndex((item: any) => item.username === username)
       if (index !== -1) {
         userList.splice(index, 1)
         return success(null)
@@ -102,9 +102,9 @@ export default [
   {
     url: '/v1/auth/users',
     method: 'put',
-    response: ({ body }) => {
+    response: ({ body }: any) => {
       const { username, newPassword } = body
-      const user = userList.find((item) => item.username === username)
+      const user = userList.find((item: any) => item.username === username)
       if (user) {
         user.password = newPassword
         return success(null)

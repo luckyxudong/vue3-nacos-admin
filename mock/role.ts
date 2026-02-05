@@ -1,7 +1,7 @@
 ﻿import Mock from 'mockjs'
 import { userList } from './user'
 
-function success(data) {
+function success(data: any) {
   return {
     code: 0,
     message: 'success',
@@ -9,7 +9,7 @@ function success(data) {
   }
 }
 
-function error(message, code = 400) {
+function error(message: any, code = 400) {
   return {
     code,
     message,
@@ -18,7 +18,7 @@ function error(message, code = 400) {
 }
 
 // 生成角色列表数据
-export const roleList = []
+export const roleList: any[] = []
 
 // 为预置用户分配角色
 roleList.push({ role: 'ROLE_ADMIN', username: 'admin' })
@@ -42,7 +42,7 @@ export default [
   {
     url: '/v1/auth/roles',
     method: 'get',
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { pageNo = 1, pageSize = 10 } = query
       const totalCount = roleList.length
       const pageNumber = parseInt(pageNo)
@@ -61,18 +61,18 @@ export default [
   {
     url: '/v1/auth/roles/search',
     method: 'get',
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { role } = query
-      return success(roleList.filter(item => item.role.includes(role)).map(item => item.role))
+      return success(roleList.filter((item: any) => item.role.includes(role)).map((item: any) => item.role))
     },
   },
   // 创建角色
   {
     url: '/v1/auth/roles',
     method: 'post',
-    response: ({ body }) => {
+    response: ({ body }: any) => {
       const { role, username } = body
-      if (!userList.some((item) => item.username === username)) {
+      if (!userList.some((item: any) => item.username === username)) {
         return error('用户不存在', 400)
       }
       roleList.push({ role, username })
@@ -83,9 +83,9 @@ export default [
   {
     url: '/v1/auth/roles',
     method: 'delete',
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { role } = query
-      const index = roleList.findIndex(item => item.role === role)
+      const index = roleList.findIndex((item: any) => item.role === role)
       if (index !== -1) {
         roleList.splice(index, 1)
         return success(null)

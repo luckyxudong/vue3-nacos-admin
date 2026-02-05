@@ -45,7 +45,7 @@ export const validateContent = {
           const doc = parser.parseFromString(content, 'text/xml')
           const errors = doc.querySelectorAll('parsererror')
           if (errors.length > 0) {
-            const errorText = errors[0].textContent || 'XML 格式错误'
+            const errorText = errors[0]?.textContent || 'XML 格式错误'
             return { valid: false, message: `XML 格式错误：${errorText}` }
           }
           return { valid: true }
@@ -77,7 +77,7 @@ export const validateContent = {
         // Properties 格式验证：key=value，支持转义和续行
         const lines = content.split('\n')
         for (let i = 0; i < lines.length; i++) {
-          const line = lines[i].trim()
+          const line = lines[i]?.trim() || ''
           // 跳过空行和注释行
           if (!line || line.startsWith('#')) {
             continue

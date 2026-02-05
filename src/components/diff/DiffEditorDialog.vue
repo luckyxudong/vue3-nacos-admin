@@ -85,7 +85,7 @@ const initMergeView = () => {
 
   mergeView = _CodeMirror.MergeView(editorContainer.value, {
     value: props.modifiedContent,
-    origLeft: null,
+    origLeft: undefined,
     orig: props.originalContent,
     lineNumbers: true,
     mode: cmMode.value,
@@ -95,7 +95,7 @@ const initMergeView = () => {
     collapseIdentical: false,
     readOnly: true, // Both read-only for confirmation
     revertButtons: false,
-  })
+  } as any)
 }
 
 watch(

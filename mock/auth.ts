@@ -1,4 +1,4 @@
-﻿function success(data) {
+﻿function success(data: any) {
   return {
     code: 0,
     message: 'success',
@@ -6,7 +6,7 @@
   }
 }
 
-function error(message, code = 401) {
+function error(message: any, code = 401) {
   return {
     code,
     message,
@@ -18,7 +18,7 @@ export default [
   {
     url: '/v1/auth/users/login',
     method: 'post',
-    response: ({ body }) => {
+    response: ({ body }: any) => {
       const { username, password } = body
       if (username === 'admin' && password === 'admin') {
         return success({

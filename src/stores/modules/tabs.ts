@@ -170,7 +170,7 @@ export const useTabsStore = defineStore(
   },
   {
     persist: {
-      paths: ['tabs', 'activeTab'],
+      pick: ['tabs', 'activeTab'],
     },
   },
 )

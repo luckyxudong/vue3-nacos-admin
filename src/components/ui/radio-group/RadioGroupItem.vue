@@ -17,7 +17,7 @@ const radioGroup = inject<{
   modelValue: { value: string | undefined }
   disabled: { value: boolean }
   updateValue: (value: string) => void
-}>('radioGroup', null)
+}>('radioGroup', null as any)
 
 const isChecked = computed(() => radioGroup?.modelValue.value === props.value)
 const isDisabled = computed(() => props.disabled || radioGroup?.disabled.value || false)

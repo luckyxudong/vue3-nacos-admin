@@ -92,5 +92,23 @@ export default defineConfig(({ mode, command }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
+    build: {
+      chunkSizeWarningLimit: 2000,
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            if (id.includes('node_modules')) {
+              if (id.includes('monaco-editor')) {
+                return 'monaco-vendor'
+              }
+              if (id.includes('codemirror')) {
+                return 'codemirror-vendor'
+              }
+              return 'vendor'
+            }
+          },
+        },
+      },
+    },
   }
 })

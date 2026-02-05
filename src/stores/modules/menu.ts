@@ -228,8 +228,8 @@ export const useMenuStore = defineStore(
   },
   {
     persist: {
-      paths: ['expandedMenus', 'isCollapsed'],
-      afterRestore: (ctx) => {
+      pick: ['expandedMenus', 'isCollapsed'],
+      afterHydrate: (ctx: any) => {
         if (!Array.isArray(ctx.store.expandedMenus)) {
           ctx.store.expandedMenus = ['/overview']
         }

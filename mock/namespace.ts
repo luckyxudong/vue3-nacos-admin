@@ -1,4 +1,4 @@
-﻿function success(data) {
+﻿function success(data: any) {
   return {
     code: 0,
     message: 'success',
@@ -6,7 +6,7 @@
   }
 }
 
-function error(message, code = 400) {
+function error(message: any, code = 400) {
   return {
     code,
     message,
@@ -56,9 +56,9 @@ export default [
     url: '/v1/console/namespaces',
     method: 'get',
     params: { show: 'all' },
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { namespaceId } = query
-      const ns = namespaces.find(item => item.namespace === namespaceId)
+      const ns = namespaces.find((item: any) => item.namespace === namespaceId)
       if (ns) {
         return success(ns)
       }
@@ -69,10 +69,10 @@ export default [
   {
     url: '/v1/console/namespaces',
     method: 'post',
-    response: ({ body }) => {
+    response: ({ body }: any) => {
       const { namespaceId, namespaceShowName, namespaceDesc } = body
       const id = namespaceId || `NS-${Math.random().toString(36).substr(2, 9)}`
-      if (namespaces.some(item => item.namespace === id)) {
+      if (namespaces.some((item: any) => item.namespace === id)) {
         return error('命名空间 ID 已存在')
       }
       namespaces.push({
@@ -90,9 +90,9 @@ export default [
   {
     url: '/v1/console/namespaces',
     method: 'put',
-    response: ({ body }) => {
+    response: ({ body }: any) => {
       const { namespaceId, namespaceShowName, namespaceDesc } = body
-      const ns = namespaces.find(item => item.namespace === namespaceId)
+      const ns = namespaces.find((item: any) => item.namespace === namespaceId)
       if (ns) {
         ns.namespaceShowName = namespaceShowName
         ns.namespaceDesc = namespaceDesc
@@ -105,9 +105,9 @@ export default [
   {
     url: '/v1/console/namespaces',
     method: 'delete',
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { namespaceId } = query
-      const index = namespaces.findIndex(item => item.namespace === namespaceId)
+      const index = namespaces.findIndex((item: any) => item.namespace === namespaceId)
       if (index !== -1) {
         namespaces.splice(index, 1)
         return success(null)
@@ -120,9 +120,9 @@ export default [
     url: '/v1/console/namespaces',
     method: 'get',
     params: { checkNamespaceIdExist: true },
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { customNamespaceId } = query
-      return namespaces.some(item => item.namespace === customNamespaceId)
+      return namespaces.some((item: any) => item.namespace === customNamespaceId)
     },
   },
 ]

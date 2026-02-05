@@ -1,4 +1,4 @@
-﻿function success(data) {
+﻿function success(data: any) {
   return {
     code: 0,
     message: 'success',
@@ -6,7 +6,7 @@
   }
 }
 
-function error(message, code = 400) {
+function error(message: any, code = 400) {
   return {
     code,
     message,
@@ -15,7 +15,7 @@ function error(message, code = 400) {
 }
 
 // 模拟配置数据
-const configs = []
+const configs: any[] = []
 
 for (let i = 1; i <= 50; i++) {
   configs.push({
@@ -37,11 +37,11 @@ export default [
   {
     url: '/v1/cs/configs',
     method: 'get',
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       // 如果带有 show=all，则是获取详情
       if (query.show === 'all') {
         const { dataId, group, tenant = '' } = query
-        const cfg = configs.find(item => item.dataId === dataId && item.group === group && item.tenant === tenant)
+        const cfg = configs.find((item: any) => item.dataId === dataId && item.group === group && item.tenant === tenant)
         if (cfg) return success(cfg)
         return error('配置不存在', 404)
       }
@@ -52,10 +52,10 @@ export default [
       }
 
       const { dataId, group, tenant = '', pageNo = 1, pageSize = 10 } = query
-      let filtered = configs.filter(item => item.tenant === tenant)
-      
-      if (dataId) filtered = filtered.filter(item => item.dataId.includes(dataId))
-      if (group) filtered = filtered.filter(item => item.group.includes(group))
+      let filtered = configs.filter((item: any) => item.tenant === tenant)
+
+      if (dataId) filtered = filtered.filter((item: any) => item.dataId.includes(dataId))
+      if (group) filtered = filtered.filter((item: any) => item.group.includes(group))
 
       const totalCount = filtered.length
       const pageNum = parseInt(pageNo)
@@ -74,15 +74,15 @@ export default [
   {
     url: '/v1/cs/configs',
     method: 'post',
-    response: ({ body, query }) => {
+    response: ({ body, query }: any) => {
       // 克隆配置
       if (query && query.clone === 'true') {
         return success(true)
       }
 
       const { dataId, group, content, appName, desc, type, tenant = '' } = body
-      const index = configs.findIndex(item => item.dataId === dataId && item.group === group && item.tenant === tenant)
-      
+      const index = configs.findIndex((item: any) => item.dataId === dataId && item.group === group && item.tenant === tenant)
+
       if (index !== -1) {
         // 更新
         configs[index] = { ...configs[index], content, appName, desc, type, md5: `md5-${Date.now()}` }
@@ -107,18 +107,18 @@ export default [
   {
     url: '/v1/cs/configs',
     method: 'delete',
-    response: ({ query }) => {
+    response: ({ query }: any) => {
       const { dataId, group, tenant = '', delType, ids } = query
       if (delType === 'ids' && ids) {
-        const idList = ids.split(',').map((id) => parseInt(id))
-        idList.forEach((id) => {
-          const index = configs.findIndex(item => item.id === id)
+        const idList = ids.split(',').map((id: string) => parseInt(id))
+        idList.forEach((id: number) => {
+          const index = configs.findIndex((item: any) => item.id === id)
           if (index !== -1) configs.splice(index, 1)
         })
         return success(true)
       }
 
-      const index = configs.findIndex(item => item.dataId === dataId && item.group === group && item.tenant === tenant)
+      const index = configs.findIndex((item: any) => item.dataId === dataId && item.group === group && item.tenant === tenant)
       if (index !== -1) {
         configs.splice(index, 1)
         return success(true)
