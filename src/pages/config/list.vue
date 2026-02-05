@@ -763,7 +763,7 @@ import { confirm, alertError, alertSuccess } from '@/utils/dialog'
 import { toastSuccess } from '@/utils/toast'
 import { api } from '@/http'
 import { useAuthStore } from '@/stores'
-import MonacoEditor from 'monaco-editor-vue3'
+const MonacoEditor = defineAsyncComponent(() => import('monaco-editor-vue3'))
 import DiffEditorDialog from '@/components/diff/DiffEditorDialog.vue'
 
 // 查询参数
@@ -1484,10 +1484,13 @@ const confirmImport = async () => {
 }
 
 // 初始化
-onMounted(() => {
-  loadNamespaces().then(() => {
+onMounted(async () => {
+  // 同时加载命名空间和配置列表，减少首屏等待时间
+  // 如果 default tenant 在加载后发生变化，loadNamespaces 内部会处理
+  await Promise.all([
+    loadNamespaces(),
     loadConfigList()
-  })
+  ])
 })
 </script>
 

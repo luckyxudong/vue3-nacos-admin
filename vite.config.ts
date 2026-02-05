@@ -92,6 +92,18 @@ export default defineConfig(({ mode, command }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
+    optimizeDeps: {
+      include: [
+        'monaco-editor',
+        'monaco-editor-vue3',
+        'axios',
+        'vue',
+        'vue-router',
+        'pinia',
+        '@vueuse/core',
+        'vue-i18n',
+      ],
+    },
     build: {
       chunkSizeWarningLimit: 2000,
       rollupOptions: {
