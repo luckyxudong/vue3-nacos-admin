@@ -1,89 +1,80 @@
 <template>
   <div class="login-page">
-    <!-- 背景装饰元素 -->
-    <div class="bg-decoration">
-      <div class="circle circle-1"></div>
-      <div class="circle circle-2"></div>
-      <div class="circle circle-3"></div>
+    <!-- Premium background with mesh gradient and animated glows -->
+    <div class="background-mesh">
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+      <div class="glow glow-3"></div>
+      <div class="noise-overlay"></div>
     </div>
 
-    <div class="login-container">
-      <Card class="login-card animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <CardHeader class="space-y-2">
-          <div class="flex-center mb-2">
-            <div class="logo-wrapper animate-bounce-subtle">
-              <div class="i-ph-shield-check-fill text-4xl text-primary"></div>
-            </div>
+    <div class="login-wrapper">
+      <div class="login-container">
+        <!-- Logo & Header -->
+        <header class="login-header animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          <div class="logo-box">
+            <div class="logo-ripple"></div>
+            <div class="i-ph-shield-check-fill logo-icon"></div>
           </div>
-          <CardTitle class="login-title">{{ $t('login.title') }}</CardTitle>
-          <CardDescription class="login-subtitle">
-            {{ $t('login.subtitle') }}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          <h1 class="login-title">{{ $t('login.title') }}</h1>
+          <p class="login-subtitle">{{ $t('login.subtitle') }}</p>
+        </header>
+
+        <!-- Login Card -->
+        <div class="glass-card animate-in fade-in zoom-in-95 duration-700 delay-300 fill-mode-both">
           <form @submit.prevent="handleLogin" class="login-form">
-            <div class="form-group animate-in fade-in slide-in-from-left-4 duration-500 delay-200 fill-mode-both">
-              <Label for="username" class="text-sm font-semibold uppercase tracking-wider ml-1">
-                {{ $t('login.username') }}
-              </Label>
-              <div class="relative mt-1.5">
-                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                  <div class="i-ph-user-bold"></div>
-                </div>
-                <Input
+            <div class="form-item">
+              <div class="input-wrapper">
+                <div class="input-icon i-ph-user-bold"></div>
+                <input
                   id="username"
                   v-model="form.username"
                   type="text"
                   :placeholder="$t('login.username')"
                   :disabled="loading"
-                  class="pl-10 h-12 text-base bg-background/50 focus:bg-background focus:border-primary focus-visible:ring-primary transition-all duration-300"
+                  autocomplete="username"
+                  class="glass-input"
                 />
               </div>
-              <Transition name="fade-slide">
-                <p v-if="errors.username" class="error-message">{{ errors.username }}</p>
+              <Transition name="slide-up">
+                <span v-if="errors.username" class="field-error">{{ errors.username }}</span>
               </Transition>
             </div>
 
-            <div class="form-group animate-in fade-in slide-in-from-left-4 duration-500 delay-300 fill-mode-both">
-              <Label for="password" class="text-sm font-semibold uppercase tracking-wider ml-1">
-                {{ $t('login.password') }}
-              </Label>
-              <div class="relative mt-1.5">
-                <div class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                  <div class="i-ph-lock-key-bold"></div>
-                </div>
-                <Input
+            <div class="form-item">
+              <div class="input-wrapper">
+                <div class="input-icon i-ph-lock-key-bold"></div>
+                <input
                   id="password"
                   v-model="form.password"
                   type="password"
                   :placeholder="$t('login.password')"
                   :disabled="loading"
-                  class="pl-10 h-12 text-base bg-background/50 focus:bg-background focus:border-primary focus-visible:ring-primary transition-all duration-300"
+                  autocomplete="current-password"
+                  class="glass-input"
                 />
               </div>
-              <Transition name="fade-slide">
-                <p v-if="errors.password" class="error-message">{{ errors.password }}</p>
+              <Transition name="slide-up">
+                <span v-if="errors.password" class="field-error">{{ errors.password }}</span>
               </Transition>
             </div>
 
-            <!-- Error message removed, using toast instead -->
-
-            <Button
+            <button
               type="submit"
               :disabled="loading"
-              class="login-button h-11 text-base font-semibold shadow-md hover:shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-400 fill-mode-both"
+              class="premium-button"
             >
-              <div v-if="loading" class="i-ph-spinner-gap-bold animate-spin mr-2"></div>
-              {{ loading ? '登录中...' : $t('login.loginButton') }}
-            </Button>
+              <span v-if="loading" class="i-ph-spinner-gap-bold animate-spin mr-2 text-xl"></span>
+              <span class="button-text">{{ loading ? '登录中...' : $t('login.loginButton') }}</span>
+              <div class="button-glow"></div>
+            </button>
           </form>
-        </CardContent>
-      </Card>
+        </div>
 
-      <div class="footer-text animate-in fade-in duration-1000 delay-500 fill-mode-both">
-        <p class="text-center text-sm text-muted-foreground mt-8">
-          &copy; 2026 Nova Admin. All rights reserved.
-        </p>
+        <!-- Footer -->
+        <footer class="login-footer animate-in fade-in duration-1000 delay-1000 fill-mode-both">
+          <p>&copy; 2026 Nova Admin. All rights reserved.</p>
+        </footer>
       </div>
     </div>
   </div>
@@ -147,7 +138,6 @@ const handleLogin = async () => {
       router.push('/')
     } else {
       let msg = result.message || t('login.loginError')
-      // 用户不存在时 Nacos 返回 caused: User xxx not found;
       if (msg && msg.includes('User') && msg.includes('not found')) {
         msg = '用户或密码错误'
       }
@@ -155,7 +145,6 @@ const handleLogin = async () => {
     }
   } catch (error: any) {
     let msg = error.message || t('login.loginFailed')
-    // 用户不存在时 Nacos 返回 caused: User xxx not found;
     if (msg && msg.includes('User') && msg.includes('not found')) {
       msg = '用户或密码错误'
     }
@@ -168,130 +157,217 @@ const handleLogin = async () => {
 
 <style scoped lang="scss">
 .login-page {
-  @apply min-h-screen flex-center relative overflow-hidden;
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #eff6ff 100%);
+  @apply min-h-screen w-full relative overflow-hidden flex items-center justify-center font-sans antialiased;
+  background-color: #0c111d;
 }
 
-.bg-decoration {
-  @apply absolute inset-0 pointer-events-none;
+/* Background Effects */
+.background-mesh {
+  @apply absolute inset-0 z-0;
+  background: radial-gradient(circle at 10% 20%, rgba(28, 147, 153, 0.15) 0%, transparent 40%),
+              radial-gradient(circle at 90% 80%, rgba(94, 124, 224, 0.1) 0%, transparent 40%),
+              radial-gradient(circle at 50% 50%, rgba(12, 17, 29, 1) 0%, #020617 100%);
 
-  .circle {
-    @apply absolute rounded-full opacity-30 blur-3xl;
-    background: var(--wm-color-primary);
+  .glow {
+    @apply absolute rounded-full blur-[120px] opacity-40 mix-blend-screen;
+    filter: blur(100px);
   }
 
-  .circle-1 {
-    width: 500px;
-    height: 500px;
-    top: -150px;
-    left: -150px;
-    animation: float 15s infinite alternate ease-in-out;
+  .glow-1 {
+    width: 40vw;
+    height: 40vw;
+    top: -10vw;
+    left: -10vw;
+    background: radial-gradient(circle, var(--wm-color-primary) 0%, transparent 70%);
+    animation: float 20s infinite alternate linear;
   }
 
-  .circle-2 {
-    width: 400px;
-    height: 400px;
-    bottom: -100px;
-    right: -100px;
-    background: var(--wm-color-info);
-    animation: float 12s infinite alternate-reverse ease-in-out;
+  .glow-2 {
+    width: 30vw;
+    height: 30vw;
+    bottom: -5vw;
+    right: -5vw;
+    background: radial-gradient(circle, var(--wm-color-info) 0%, transparent 70%);
+    animation: float 15s infinite alternate-reverse linear;
   }
 
-  .circle-3 {
-    width: 300px;
-    height: 300px;
-    top: 30%;
-    right: 10%;
-    background: var(--wm-color-success);
-    animation: float 18s infinite alternate ease-in-out;
+  .glow-3 {
+    width: 25vw;
+    height: 25vw;
+    top: 20%;
+    right: 15%;
+    background: radial-gradient(circle, #3dbe7d 0%, transparent 70%);
+    opacity: 0.1;
+    animation: float 25s infinite alternate linear;
+  }
+
+  .noise-overlay {
+    @apply absolute inset-0 pointer-events-none opacity-[0.03];
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 }
 
-@keyframes float {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  100% { transform: translate(60px, 60px) rotate(15deg); }
+.login-wrapper {
+  @apply relative z-10 w-full max-w-lg px-6;
 }
 
-@keyframes bounce-subtle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+/* Header Section */
+.login-header {
+  @apply text-center mb-12;
+
+  .logo-box {
+    @apply relative w-24 h-24 mx-auto mb-8 flex items-center justify-center;
+
+    .logo-icon {
+      @apply text-6xl text-primary z-10 filter drop-shadow-[0_0_15px_rgba(28,147,153,0.5)];
+    }
+
+    .logo-ripple {
+      @apply absolute inset-0 rounded-3xl bg-primary/20 scale-100;
+      animation: ripple 4s infinite ease-out;
+    }
+  }
+
+  .login-title {
+    @apply text-5xl font-extrabold tracking-tight text-white mb-3;
+    background: linear-gradient(to bottom, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .login-subtitle {
+    @apply text-slate-400 font-medium tracking-widest text-base uppercase;
+  }
 }
 
-.animate-bounce-subtle {
-  animation: bounce-subtle 3s infinite ease-in-out;
-}
-
-.login-container {
-  @apply w-full max-w-lg px-lg relative z-10;
-}
-
-.login-card {
-  @apply border-white/50 shadow-2xl p-4;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(16px);
-  border-radius: calc(var(--wm-border-radius-lg) * 1.5);
+/* Glass Card */
+.glass-card {
+  @apply p-12 rounded-[2.8rem] border border-white/10 transition-all duration-700;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    0 40px 80px -20px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05);
 
   &:hover {
-    @apply shadow-primary/20;
-    transform: translateY(-4px);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    @apply border-white/25;
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow:
+      0 50px 100px -25px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
   }
 }
 
-.logo-wrapper {
-  @apply p-4 rounded-2xl bg-primary/15 shadow-inner;
-}
-
-.login-title {
-  @apply text-4xl font-bold text-center tracking-tight;
-  color: var(--wm-color-text-primary);
-}
-
-.login-subtitle {
-  @apply text-base text-center font-medium;
-  color: var(--wm-color-text-secondary);
-}
-
+/* Form Styles */
 .login-form {
-  @apply space-y-8 mt-6;
+  @apply space-y-6;
 }
 
-.form-group {
+.form-item {
   @apply space-y-2;
 }
 
-.error-message {
-  @apply text-sm text-danger mt-2 font-medium flex items-center;
+.input-wrapper {
+  @apply relative transition-all duration-300;
 
-  &::before {
-    content: "";
-    @apply i-ph-warning-circle-bold mr-1.5 inline-block;
+  .input-icon {
+    @apply absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 text-xl transition-all duration-300;
+  }
+
+  &:focus-within {
+    .input-icon {
+      @apply text-primary scale-110;
+      filter: drop-shadow(0 0 5px rgba(28, 147, 153, 0.4));
+    }
   }
 }
 
-.login-button {
-  @apply w-full mt-4 h-12 text-lg bg-primary hover:bg-primary-dark-1 active:scale-[0.97];
+.glass-input {
+  @apply w-full h-16 bg-black/20 border border-white/5 rounded-2xl px-14 text-white text-lg placeholder:text-slate-600 outline-none transition-all duration-500;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+
+  &:focus {
+    @apply border-primary/40 bg-black/40;
+    box-shadow:
+      0 0 25px rgba(28, 147, 153, 0.2),
+      inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
 }
 
-/* Transitions */
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.3s ease;
+/* Premium Button (Stereo 3D Effect) */
+.premium-button {
+  @apply relative w-full h-16 mt-4 overflow-hidden rounded-2xl text-white font-bold text-xl transition-all duration-500 active:scale-[0.96] disabled:opacity-70;
+  background: linear-gradient(135deg, var(--wm-color-primary) 0%, #157378 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 10px 20px -5px rgba(28, 147, 153, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+
+  .button-text {
+    @apply relative z-10 flex items-center justify-center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .button-glow {
+    @apply absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/30 to-transparent;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+      0 15px 30px -5px rgba(28, 147, 153, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+
+    .button-glow {
+      transform: translateX(100%);
+    }
+  }
 }
-.fade-enter-from, .fade-leave-to {
+
+/* Feedback */
+.field-error {
+  @apply text-xs text-danger font-semibold mt-1.5 flex items-center ml-1;
+
+  &::before {
+    content: "";
+    @apply i-ph-warning-circle-bold mr-1 text-sm;
+  }
+}
+
+/* Footer */
+.login-footer {
+  @apply mt-12 text-center text-slate-500 text-sm;
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 50px) scale(1.1); }
+  100% { transform: translate(-30px, 20px) scale(0.9); }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.slide-up-enter-active, .slide-up-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide-up-enter-from, .slide-up-leave-to {
   opacity: 0;
+  transform: translateY(10px);
 }
 
-.fade-slide-enter-active, .fade-slide-leave-active {
-  transition: all 0.3s ease;
-}
-.fade-slide-enter-from, .fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(-5px);
-}
-
-.delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
+.delay-1000 { animation-delay: 1000ms; }
 .fill-mode-both { animation-fill-mode: both; }
 </style>
