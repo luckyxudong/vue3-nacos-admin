@@ -121,14 +121,4 @@ export default [
       return error('命名空间不存在', 404)
     },
   },
-  // 检查命名空间 ID 是否存在
-  {
-    url: '/v1/console/namespaces',
-    method: 'get',
-    params: { checkNamespaceIdExist: true },
-    response: ({ query }: any) => {
-      const { customNamespaceId } = query
-      return namespaces.some((item: any) => item.namespace === customNamespaceId)
-    },
-  },
 ]
