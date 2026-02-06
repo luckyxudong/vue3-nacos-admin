@@ -1,0 +1,36 @@
+schema: spec-driven
+
+context: |
+  语言：中文（简体）
+  所有产出物必须用简体中文撰写。
+  - Keep technical terms like "API", "REST", "GraphQL" in English
+  - Code examples and file paths remain in English
+
+  **Tech Stack**: Vue 3 (Composition API), TypeScript, Vite, Pinia, Vue Router, UnoCSS, SCSS
+
+  **Auto-import**: Vue/VueUse/Pinia/Router APIs auto-import (NO manual imports). Components in `src/components` auto-register (NO manual imports).
+
+  **Critical Patterns**:
+  - All modules register via `install*` functions (installPinia, installRouter, installI18n, etc)
+  - Store modules MUST be in `src/stores/modules/`, export via `src/stores/index.ts`
+  - Pages in `src/pages/` auto-generate routes (unplugin-vue-router)
+  - Layouts in `src/layouts/`
+  - HTTP: Service classes extend BaseService, core in `src/http/core/` (reusable), config in `src/http/index.ts`
+
+  **Naming**: Components=PascalCase, utils=kebab-case, stores=kebab-case, constants=UPPER_SNAKE_CASE
+
+  **Styles**: UnoCSS first, SCSS vars from `src/assets/scss/settings/`, shadcn-vue components in `src/components/ui/`
+
+  **i18n**: Composition API mode (legacy: false), locales in `src/i18n/locales/`, route-level lazy loading via `meta.locales`
+
+  **Constraints**: pnpm only, Node ^20.19.0 || >=22.12.0, all env vars prefixed `VITE_`
+
+rules:
+  specs:
+    - Use Given/When/Then format for behavior specs
+    - Reference actual file paths (src/...) not generic descriptions
+
+  tasks:
+    - Respect auto-import system - don't add manual imports for Vue/VueUse/Pinia APIs or components
+    - Follow install* pattern for module registration
+    - Use BaseService for new services, core HTTP logic stays in src/http/core/
